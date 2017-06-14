@@ -5,13 +5,16 @@
 		<title>知问</title>
 		<link rel="shortcut icon" type="images/x-icon" href="images/favicon.ico"/>
 		<script src="jquery-ui/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-migrate-1.2.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="jquery-ui/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.validate.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+		<script src="uEditor/uEditor.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="jquery-ui/jquery-ui.css"/>
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="uEditor/uEditor.css"/>
 	</head>
 	<body>
 		<header id="header">
@@ -22,6 +25,7 @@
 				</div>
 				<div class="header_button">
 					<button type="button" value="查询" id="search_button" /></button>
+					<button type="button" value="提问" id="question_button" />提问</button>
 				</div>
 				<div class="header_member">
 					<a href="#" id="reg_a">注册</a>
@@ -33,19 +37,24 @@
 			</div>
 		</header>
 		
-		
-		<div id="tabs">
-			<ul>
-				<li><a href="#tab1">tab1</a></li>
-				<li><a href="#tab2">tab2</a></li>
-				<li><a href="#tab3">tab3</a></li>
-			</ul>
-			<div id="tab1">tab1-content</div>
-			<div id="tab2">tab2-content</div>
-			<div id="tab3">tab3-content</div>
-		</div>
-		
-		
+		<section id="section">
+			<div id="tabs">
+				<ul>
+					<li><a href="tab1.html">tab1</a></li>
+					<li><a href="tab2.html">tab2</a></li>
+					<li><a href="tab3.html">tab3</a></li>
+				</ul>
+			</div>
+			<button id="button">刷新</button>
+			<div id="accordion">
+				<h1>菜单1</h1>
+				<div>内容1</div>
+				<h1>菜单2</h1>
+				<div>内容2</div>
+				<h1>菜单3</h1>
+				<div>内容3</div>
+			</div>
+		</section>
 		<form id="reg" action="123.html" title="会员注册">
 			<ol class="reg_error"></ol>
 			<p>
@@ -75,7 +84,20 @@
 			
 		</form>
 		
+		
+		<form id="question" title="提问">
+			<p>
+				<label for="title">问题标题：</label>
+				<input type="text" style="width: 220px;" name="title" id="title" class="text"></label>
+			</p>
+			<p>
+				<textarea name="content" class="uEditorCustom">请输入问题描述</textarea>
+			</p>
+		</form>
+		
+		
 		<div id="loading">数据交互...</div>
+		<div id="error">请登录后操作...</div>
 		
 		<form id="login" title="会员登录">
 			<ol class="login_error"></ol>

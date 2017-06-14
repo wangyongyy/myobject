@@ -8,7 +8,66 @@ $(function(){
 		},
 		label : '查找',
 	});
-	
+	$('#question_button').button({
+		
+	}).click(function(){
+		if($.cookie('user')){
+			$('#question').dialog('open');
+		}else{
+			$('#error').dialog('open');
+			setTimeout(function(){
+				$('#error').dialog('close');
+				$('#login').dialog('open');
+			},1000)
+		}
+	});
+	$('#question').dialog({
+		autoOpen : false,
+		modal : true,
+		closeOnEscape : false,
+		resizable : false,
+		draggable : false,
+		width : 400,
+		height : 350,
+		buttons : {
+			'发布' : function(){
+				$(this).ajaxSubmit({
+					url : 'add_content.php',
+					type : 'POST',
+					data : {
+						user : $.cookie('user'),
+					},
+					beforeSubmit : function(formDate,jqForm,options){
+						$('#loading').dialog('open');
+						$('#question').dialog('widget').find('button').eq(1).button('disable');
+					},
+					success : function(responseText,statusText){
+						//alert('提交');
+						if(responseText){
+							$('#loading').css('background','url(images/success.gif) no-repeat 20px center').html('数据新增成功');
+							$('#question').dialog('widget').find('button').eq(1).button('enable')
+							setTimeout(function(){
+								$('#loading').dialog('close');
+								$('#question').dialog('close');
+								$('#question').resetForm();
+								$('#loading').css('background','url(images/loading.gif) no-repeat 20px center').html('数据交互中...');
+							},1000)
+						}
+					},
+				});
+			},
+		}
+	});
+	$('.uEditorCustom').uEditor();
+	$('#error').dialog({
+		autoOpen : false,
+		modal : true,
+		closeOnEscape : false,
+		resizable : false,
+		draggable : false,
+		width : 200,
+		height : 80,
+	}).parent().find('.ui-widget-header').hide();
 	
 	$('#member, #logout').hide();
 	if($.cookie('user')){
@@ -21,7 +80,7 @@ $(function(){
 	};
 	$('#logout').click(function(){
 		$.removeCookie('user');
-		window.location.href = '/jQueryUI/jQuery_09/';
+		window.location.href = '/jQueryUI/';
 	})
 	$('#loading').dialog({
 		autoOpen : false,
@@ -31,7 +90,7 @@ $(function(){
 		draggable : false,
 		width : 180,
 		height : 50,
-	}).parent().parent().find('.ui-widget-header').hide();
+	}).parent().find('.ui-widget-header').hide();
 	
 	$('#reg_a').click(function(){
 		$('#reg').dialog('open');
@@ -77,7 +136,7 @@ $(function(){
 							$('#member').html($.cookie('user'));
 						},1000)
 					}
-				}
+				},
 			});
 		},
 		
@@ -343,24 +402,21 @@ $(function(){
 	});
 	
 	$('#tabs').tabs({
-		//collapsible : true,
-		//disabled : [0,1],
-		//event : 'mouseover',
-		//active : false,
-		//heightStyle : 'fill',
-		//show : true,
-		//hide : true,
-		//create : function(event,ui){
-			//alert(ui.tab.get());
+		beforeLoad : function(event,ui){
+			//alert('ajax远程加载文档后触发！');
 			//alert($(ui.tab.get()).html());
 			//alert($(ui.panel.get()).html());
-		//},
-		activate : function(event,ui){
-			//alert('切换后触发');
-			alert($(ui.oldTab.get()).html());
-			alert($(ui.newTab.get()).html());
+			//ui.ajaxSettings.url = 'tab3.html';
+			/*ui.jqXHR.success(function(responseText){
+				alert(responseText);
+			});*/
 		}
 	});
+	$('#button').click(function(){
+		$('#tabs').tabs('load',0);
+	});
+	
+	$('#accordion').accordion();
 	
 	
 });
